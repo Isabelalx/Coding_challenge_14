@@ -53,4 +53,14 @@ ticket.appendChild(nameHeading); // Appending customer's name
 }
 highlightHighPriorityTickets(); // Applying highlight after adding tickets
 
-
+// Task 4: Implementing Ticket Resolution with Event Bubbling
+ // Selecting the ticket container 
+ const ticketContainer = document.getElementById('ticketContainer'); 
+ 
+ // Attaching an event listener to the parent container to log when it is clicked
+ ticketContainer.addEventListener("click", (event) => {
+     let ticket = event.target.closest(".ticket-card");
+     if (ticket) {
+     console.log("Employee Card clicked");
+     }
+ });
