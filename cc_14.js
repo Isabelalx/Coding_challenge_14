@@ -31,10 +31,20 @@
  if (priorityLevel === "High") {
     ticket.classList.add("high-priority");
 }
+
+// Task 5 - Creating an edit button
+const editButton = document.createElement("button");
+editButton.textContent = "Edit";
+editButton.addEventListener("click", (event) => {
+    enableEditing(ticket, nameHeading, issueParagraph, priorityLabel, editButton);
+    event.stopPropagation();
+});
+
 ticket.appendChild(nameHeading); // Appending customer's name
      ticket.appendChild(issueParagraph); // Appending issue paragraph 
      ticket.appendChild(priorityLabel); // Appending priority label 
      ticket.appendChild(resolveButton); // Appending resolve button 
+     ticket.appendChild(editButton); // Task 5 - Appending edit button 
      ticketContainer.appendChild(ticket); // Appending ticket to ticket container 
     }
     addSupportTicket("Bob Williams", "Unable to access account", "High");
@@ -64,3 +74,42 @@ highlightHighPriorityTickets(); // Applying highlight after adding tickets
      console.log("Employee Card clicked");
      }
  });
+
+ // Task 5 
+ function enableEditing(ticket, nameHeading, issueParagraph, priorityLabel, editButton) {
+    // Creating input fields for name, issue and priority label 
+    const nameInput = document.createElement("input");
+    nameInput.type = "text"; // Setting input type to text 
+    nameInput.value = nameHeading.textContent; // Pre-filling with existing name 
+
+    const issueInput = document.createElement("input");
+    issueInput.type = "text"; // Setting input type to text 
+    issueInput.value = issueParagraph.textContent; // Pre-filling with existing issue
+
+    const priorityInput = document.createElement("input");
+    priorityInput.type = "text"; // Setting input type to text 
+    priorityInput.value = priorityLabel.textContent; // Pre-filling with existing label
+
+    // Creating save button to apply changes 
+    const saveButton = document.createElement("button");
+    saveButton.textContent = "Save";
+    saveButton.addEventListener("click", () => {
+        // Updating with new input values 
+        nameHeading.textContent = nameInput.value;
+        issueParagraph.textContent = issueInput.value;
+        priorityLabel.textContent = priorityInput.value;
+
+        // Restoring original elements after saving 
+        ticket.replaceChild(nameHeading, nameInput);
+        ticket.replaceChild(issueParagraph, issueInput);
+        ticket.replaceChild(priorityLabel, priorityInput);
+        ticket.replaceChild(editButton, saveButton);
+    });
+
+    // Replacing static text with input fields
+    ticket.replaceChild(nameInput, nameHeading);
+    ticket.replaceChild(issueInput, issueParagraph);
+    ticket.replaceChild( priorityInput, priorityLabel);
+    ticket.replaceChild(saveButton, editButton);
+}
+
